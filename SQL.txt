@@ -1,0 +1,93 @@
+CREATE DATABASE conef;
+USE conef;
+
+CREATE USER 'admin'@'localhost' identified by 'ADM_102proyect';
+GRANT ALL PRIVILEGES ON prueba.* to 'admin'@'localhost';
+flush privileges;
+
+CREATE TABLE administradores(
+	idAdm INT(10) AUTO_INCREMENT PRIMARY KEY,
+	usuario VARCHAR(20),
+	nombre VARCHAR(20), 
+	apellidoPaterno VARCHAR(20), 
+	apellidoMaterno VARCHAR(20), 
+	telefono VARCHAR(10), 
+	correo VARCHAR(30), 
+	direccionCalle VARCHAR(25), 
+	direccionNumero INT(5), 
+	direccionColonia VARCHAR(25), 
+	direccionCiudad VARCHAR(25), 
+	direccionEstado VARCHAR(25), 
+	clave VARCHAR(20)
+);
+
+
+CREATE TABLE cliente (
+	idCli INT(10) AUTO_INCREMENT PRIMARY KEY, 
+	nombre VARCHAR(20), 
+	apellidoPaterno VARCHAR(20), 
+	apellidoMaterno VARCHAR(20), 
+	telefono VARCHAR(10), 
+	correo VARCHAR(30), 
+	direccionCalle VARCHAR(25),  
+	direccionNumero INT(5),  
+	direccionColonia VARCHAR(25), 
+	direccionCiudad VARCHAR(25), 
+	direccionEstado VARCHAR(25), 
+	observaciones VARCHAR(100),  
+	comercio VARCHAR(75), 
+	idAdm INT(10), 
+	INDEX (idAdm),
+    	FOREIGN KEY (idAdm) REFERENCES administradores (idAdm)
+); 
+
+CREATE TABLE materiales (
+	idMat INT(10) AUTO_INCREMENT PRIMARY KEY, 
+	nombre VARCHAR(30), 
+	tipo VARCHAR(25), 
+	precio DECIMAL(10,2), 
+	descripcion VARCHAR(100), 
+	idAdm INT(10), 
+	INDEX (idAdm),
+	FOREIGN KEY (idAdm) REFERENCES administradores (idAdm)
+);
+
+/*la fecha se debe ingresar año-mes-dia en comillas*/
+
+CREATE TABLE pedidos (
+	noVale INT(10) AUTO_INCREMENT PRIMARY KEY, 
+	fecha DATE, 
+	costo DECIMAL(10,2), 
+	idAdm INT(10),  
+	idCli INT(10), 
+	INDEX (idCli),
+	FOREIGN KEY (idAdm) REFERENCES administradores (idAdm),
+	INDEX (idCli),
+	FOREIGN KEY (idCli) REFERENCES cliente (idCli)
+);
+
+
+CREATE TABLE ped_mat (
+	idMat INT(10), 
+	noVale INT(10),
+	cantidadPorMaterial INT(5),
+	costoPorMaterial DECIMAL(10,2), 
+	PRIMARY KEY (idMat, noVale),
+	INDEX (idMat),
+	FOREIGN KEY (idMat) REFERENCES materiales (idMat),
+	INDEX (noVale),
+	FOREIGN KEY (noVale) REFERENCES pedidos (noVale) 
+);
+
+
+INSERT INTO materiales (nombre, tipo, precio, descripcion, idAdm)
+values ("material", "tipoMat", 12323230.145, "material pesado", 1);
+/*("admin1", "a", "a", 1234567890, "a@a.com", "calle1", 1, "col", "c","c", "c");*/
+
+
+INSERT INTO cliente (idCli, nombre, apellidoPaterno, apellidoMaterno, telefono, correo, direccionCalle, direccionNumero, direccionColonia, direccionCiudad, direccionEstado, observaciones, comercio, idAdm)
+  VALUES 
+	(, "Marcos", "Castilos", "Cabrera", 2721111114, "cliente@conef.com", "Sur 4", 56, "Orizaba", ""
+	(, "Daniel", "López", "Mendez", 2721111111, "adm1@conef.com", "Norte 2", 34, "Colonia1","Orizaba", "Veracruz", "cliente1"), 
+	(2, "Carlos", "Castilos", "Ruiz", 2721111112, "adm2@conef.com", "Norte 5", 10, "Mendoza", "Veracruz", "cliente2"),  
+	(3, "Brenda", "Morales", "Gómez", 2721111113, "adm3@conef.com", "Sur 13", 21, "Ixhuatlancillo", "Veracruz", "cliente3");
