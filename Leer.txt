@@ -1,0 +1,8 @@
+¡Hola!, este sistema fue un proyecto de residenias con el fin de dar solución a la empresa CELFIMEX, S.A. DE C.V.
+De manera que se describen unas breves instrucciones con las que se puede abrir el programa
+Indicaciones
+-El programa se desarrolló en Netbeans e inicia con la clase login
+-Cuenta con un archivo sql con el fin de crear la base de datos en el gestor de base de datos Mysql
+-Se anexó el reporte en el cual se describe el proceso con el que se llevó a cabo el proyecto y como se probó.
+
+Gracias por su atención prestada.
